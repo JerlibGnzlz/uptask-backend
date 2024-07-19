@@ -23,8 +23,11 @@ router.get("/", ProjectController.getAllProjects)
 router.get("/:id",
     param("id")
         .isMongoId()
-    // .notEmpty()
-    // .withMessage("Id invalido")
+        .withMessage("Id Invalido")
     ,
     handleErrors,
     ProjectController.getProjectById)
+
+
+router.put("/:id", ProjectController.updateProject)
+

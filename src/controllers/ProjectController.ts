@@ -31,7 +31,34 @@ export class ProjectController {
         const { id } = req.params
         try {
             const proyecto = await Project.findById(id)
+
+            if (!proyecto) {
+                const error = new Error("Producto no encontrado")
+                return res.status(404).json({ error: error.message })
+            }
             res.json({ "Producto By ID": proyecto })
+        } catch (error) {
+            console.log(error)
+
+        }
+    }
+
+    static updateProject = async (req: Request, res: Response) => {
+
+        const { id } = req.params
+
+        try {
+            const proyecto = await Project.findByIdAndUpdate(
+                id,
+                req.body,
+                { new: true }
+            )
+
+            if (!proyecto) {
+                const error = new Error("Producto no actulizado")
+                return res.status(404).json({ error: error.message })
+            }
+            res.json({ "Producto Actualizado": proyecto })
         } catch (error) {
             console.log(error)
 
