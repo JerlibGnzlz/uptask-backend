@@ -26,6 +26,9 @@ const projectSchema: Schema = new Schema({
         type: String,
         lowercase: true
     }
+}, {
+    timestamps: false,
+    versionKey: false
 })
 
 
