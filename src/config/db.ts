@@ -5,7 +5,7 @@ import { exit } from 'node:process';
 
 export const connectDB = async () => {
     try {
-        const { connection } = await mongoose.connect(process.env.DATABASEs_URL)
+        const { connection } = await mongoose.connect(process.env.DATABASE_URL)
         console.log(colors.bgMagenta("Base de datos Conectada:"), connection.db.databaseName);
 
     } catch (error) {
