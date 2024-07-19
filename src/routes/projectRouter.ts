@@ -2,7 +2,8 @@ import { Router } from "express";
 import { ProjectController } from "../controllers/ProjectController";
 
 
-export const ProjectRouter = Router()
+export const router = Router()
 
+router.post("/create", ProjectController.createProject)
 
-ProjectRouter.get("/", ProjectController.getAllProjects)
+router.get("/", ProjectController.getAllProjects)
