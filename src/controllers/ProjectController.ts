@@ -19,7 +19,7 @@ export class ProjectController {
 
         try {
             const proyecto = await Project.find({})
-            res.json({ "Productos": proyecto })
+            res.json({ "Proyectos": proyecto })
         } catch (error) {
             console.log(error)
 
@@ -33,10 +33,10 @@ export class ProjectController {
             const proyecto = await Project.findById(id)
 
             if (!proyecto) {
-                const error = new Error("Producto no encontrado")
+                const error = new Error("Proyecto no encontrado")
                 return res.status(404).json({ error: error.message })
             }
-            res.json({ "Producto By ID": proyecto })
+            res.json({ "Proyecto By ID": proyecto })
         } catch (error) {
             console.log(error)
 
@@ -55,10 +55,28 @@ export class ProjectController {
             )
 
             if (!proyecto) {
-                const error = new Error("Producto no actulizado")
+                const error = new Error("Proyecto no actulizado")
                 return res.status(404).json({ error: error.message })
             }
-            res.json({ "Producto Actualizado": proyecto })
+            res.json({ "Proyecto Actualizado": proyecto })
+        } catch (error) {
+            console.log(error)
+
+        }
+    }
+
+    static deleteProject = async (req: Request, res: Response) => {
+
+        const { id } = req.params
+
+        try {
+            const proyecto = await Project.findByIdAndDelete(id)
+
+            if (!proyecto) {
+                const error = new Error("Proyecto no Eliminado")
+                return res.status(404).json({ error: error.message })
+            }
+            res.json({ "Proyecto Eliminado": proyecto })
         } catch (error) {
             console.log(error)
 

@@ -29,5 +29,28 @@ router.get("/:id",
     ProjectController.getProjectById)
 
 
-router.put("/:id", ProjectController.updateProject)
+router.put("/:id",
+    param("id")
+        .isMongoId()
+        .withMessage("Id Invalido"),
+    body("projectName")
+        .notEmpty()
+        .withMessage("El nombre del proyecto es obligatorio"),
+    body("clientName")
+        .notEmpty()
+        .withMessage("El nombre del Cliente es obligatorio"),
+    body("description")
+        .notEmpty()
+        .withMessage("El nombre de la Descripcion es obligatorio"),
+    handleErrors,
+    ProjectController.updateProject)
+
+
+router.delete("/:id",
+    param("id")
+        .isMongoId()
+        .withMessage("Id Invalido"),
+    handleErrors,
+    ProjectController.deleteProject)
+
 
