@@ -1,14 +1,14 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 
-export type ProjectType = Document & {
+export type TaskType = Document & {
     projectName: string
     clientName: string
     description: string
 }
 
 
-const projectSchema: Schema = new Schema({
+const taskSchema: Schema = new Schema({
     projectName: {
         type: String,
         require: true,
@@ -32,4 +32,4 @@ const projectSchema: Schema = new Schema({
 })
 
 
-export const Project = mongoose.model<ProjectType>("Project", projectSchema)
+export const Task = mongoose.model<TaskType>("Task", taskSchema)
