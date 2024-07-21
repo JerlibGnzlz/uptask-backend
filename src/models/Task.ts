@@ -1,30 +1,28 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 
-export type TaskType = Document & {
-    projectName: string
-    clientName: string
-    description: string
+export interface ITask extends Document {
+    name: string
+    description: string,
+    project: Types.ObjectId
 }
 
 
 const taskSchema: Schema = new Schema({
-    projectName: {
+    name: {
         type: String,
         require: true,
         lowercase: true,
         trim: true,
-        unique: true
-    },
-    clientName: {
-        type: String,
-        require: true,
-        lowercase: true
-
     },
     description: {
         type: String,
+        trim: true,
         lowercase: true
+    },
+    project: {
+        type: Types.ObjectId,
+        ref: "Project"
     }
 }, {
     timestamps: false,
@@ -32,4 +30,4 @@ const taskSchema: Schema = new Schema({
 })
 
 
-export const Task = mongoose.model<TaskType>("Task", taskSchema)
+export const Task = mongoose.model<ITask>("Task", taskSchema)
