@@ -12,7 +12,7 @@ export class TaskController {
             req.project.tasks.push(task.id)
             await task.save()
             await req.project.save()
-            res.send("Task Creada Correctamente")
+            res.json("Task Creada Correctamente")
         } catch (error) {
             console.log(error)
         }
