@@ -16,7 +16,7 @@ export type TaskStatus = typeof taskStatus[keyof typeof taskStatus]
 export interface ITask extends Document {
     name: string
     description: string,
-    project: Types.ObjectId,
+    project: mongoose.Schema.Types.ObjectId,
     status: TaskStatus
 }
 

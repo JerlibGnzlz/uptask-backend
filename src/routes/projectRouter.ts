@@ -3,6 +3,7 @@ import { ProjectController } from "../controllers/ProjectController";
 import { body, param } from "express-validator";
 import { handleErrors } from "../middleware/validation";
 import { TaskController } from "../controllers/TaskController";
+import { validateProjectExists } from "../middleware/project";
 
 export const router = Router()
 
@@ -64,12 +65,12 @@ router.delete("/:id",
 /* -------------------------------------------------------------------------- */
 
 router.post("/:projectId/tasks",
-    body("name")
-        .notEmpty()
-        .withMessage("El nombre de la task es obligatorio"),
-    body("description")
-        .notEmpty()
-        .withMessage("El nombre de la Descripcion es obligatorio"),
-    handleErrors,
+    // body("name")
+    //     .notEmpty()
+    //     .withMessage("El nombre de la task es obligatorio"),
+    // body("description")
+    //     .notEmpty()
+    //     .withMessage("El nombre de la Descripcion es obligatorio"),
+    validateProjectExists,
     TaskController.createTask
 )

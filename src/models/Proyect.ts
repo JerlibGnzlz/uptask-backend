@@ -29,7 +29,7 @@ const projectSchema: Schema = new Schema({
         trim: true,
         lowercase: true
     },
-    task: [
+    tasks: [
         {
             type: Types.ObjectId,
             ref: "Task"
