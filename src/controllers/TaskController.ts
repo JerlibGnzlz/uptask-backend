@@ -20,7 +20,7 @@ export class TaskController {
     static getProjectTasks = async (req: Request, res: Response) => {
         const { id } = req.params
         try {
-            const tasks = await Task.find().where("project").equals(req.project.id)
+            const tasks = await Task.find().where("project").equals(req.project.id).populate("project", "-tasks")
             res.json({ "Tareas": tasks })
         } catch (error) {
             console.log(error)
