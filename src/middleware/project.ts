@@ -1,7 +1,5 @@
 import type { Request, Response, NextFunction } from "express"
 import { IProject, Project } from '../models/Proyect';
-import { Type } from "typescript";
-import { Types } from "mongoose";
 
 declare global {
     namespace Express {

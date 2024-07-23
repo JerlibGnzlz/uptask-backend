@@ -65,12 +65,15 @@ router.delete("/:id",
 /* -------------------------------------------------------------------------- */
 
 router.post("/:projectId/tasks",
-    // body("name")
-    //     .notEmpty()
-    //     .withMessage("El nombre de la task es obligatorio"),
-    // body("description")
-    //     .notEmpty()
-    //     .withMessage("El nombre de la Descripcion es obligatorio"),
+    body("name")
+        .notEmpty()
+        .withMessage("El nombre de la task es obligatorio"),
+    body("description")
+        .notEmpty()
+        .withMessage("El nombre de la Descripcion es obligatorio"),
     validateProjectExists,
     TaskController.createTask
 )
+
+
+
