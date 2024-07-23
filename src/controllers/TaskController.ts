@@ -17,15 +17,15 @@ export class TaskController {
         }
     }
 
-    static getAllTasks = async (req: Request, res: Response) => {
+    static getProjectTasks = async (req: Request, res: Response) => {
+        const { id } = req.params
+        try {
+            const tasks = await Task.find().where("project").equals(req.project.id)
+            res.json({ "Tareas": tasks })
+        } catch (error) {
+            console.log(error)
 
-        // try {
-        //     const proyecto = await Project.find({})
-        //     res.json({ "Proyectos": proyecto })
-        // } catch (error) {
-        //     console.log(error)
-
-        // }
+        }
     }
 
     static getTaskById = async (req: Request, res: Response) => {
