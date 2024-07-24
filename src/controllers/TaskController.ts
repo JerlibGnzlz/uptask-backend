@@ -30,19 +30,19 @@ export class TaskController {
 
     static getTaskById = async (req: Request, res: Response) => {
 
-        // const { id } = req.params
-        // try {
-        //     const proyecto = await Project.findById(id)
+        const { id } = req.params
+        try {
+            const task = await Task.findById(id)
 
-        //     if (!proyecto) {
-        //         const error = new Error("Proyecto no encontrado")
-        //         return res.status(404).json({ error: error.message })
-        //     }
-        //     res.json({ "Proyecto By ID": proyecto })
-        // } catch (error) {
-        //     console.log(error)
+            if (!task) {
+                const error = new Error("Tarea no encontrado")
+                return res.status(404).json({ error: error.message })
+            }
+            res.json({ "Tarea By ID": task })
+        } catch (error) {
+            console.log(error)
 
-        // }
+        }
     }
 
     static updateTask = async (req: Request, res: Response) => {

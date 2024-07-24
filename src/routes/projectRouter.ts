@@ -77,10 +77,13 @@ router.post("/:projectId/tasks",
 
 
 router.get("/:projectId/tasks",
-
     validateProjectExists,
     TaskController.getProjectTasks
 )
 
 
+router.get("/task/:id",
 
+    validateProjectExists,
+    TaskController.getTaskById
+)
