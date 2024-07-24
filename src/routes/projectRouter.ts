@@ -82,8 +82,22 @@ router.get("/:projectId/tasks",
 )
 
 
-router.get("/task/:id",
-
+router.get("/:projectId/tasks/:taskId",
+    // body("projectName")
+    //     .notEmpty()
+    //     .withMessage("El nombre del proyecto es obligatorio"),
+    // body("clientName")
+    //     .notEmpty()
+    //     .withMessage("El nombre del Cliente es obligatorio"),
+    // body("description")
+    //     .notEmpty()
+    //     .withMessage("El nombre de la Descripcion es obligatorio"),
+    // body("name")
+    //     .notEmpty()
+    //     .withMessage("El nombre de la tarea es obligatoria"),
+    // body("description")
+    //     .notEmpty()
+    //     .withMessage("La Descripcion es obligatoria"),
     validateProjectExists,
     TaskController.getTaskById
 )
