@@ -23,7 +23,8 @@ router.post("/create",
         .notEmpty()
         .withMessage("El nombre de la Descripcion es obligatorio"),
     handleErrors,
-    ProjectController.createProject)
+    ProjectController.createProject
+)
 
 router.get("/", ProjectController.getAllProjects)
 
@@ -33,7 +34,8 @@ router.get("/:id",
         .withMessage("Id Invalido")
     ,
     handleErrors,
-    ProjectController.getProjectById)
+    ProjectController.getProjectById
+)
 
 
 router.put("/:id",
@@ -50,7 +52,8 @@ router.put("/:id",
         .notEmpty()
         .withMessage("El nombre de la Descripcion es obligatorio"),
     handleErrors,
-    ProjectController.updateProject)
+    ProjectController.updateProject
+)
 
 
 router.delete("/:id",
@@ -58,7 +61,8 @@ router.delete("/:id",
         .isMongoId()
         .withMessage("Id Invalido"),
     handleErrors,
-    ProjectController.deleteProject)
+    ProjectController.deleteProject
+)
 
 /* -------------------------------------------------------------------------- */
 // RUTAS DE TASKS
@@ -91,4 +95,19 @@ router.get("/:projectId/tasks/:taskId",
     ,
     handleErrors,
     TaskController.getTaskById
+)
+
+
+router.put("/:projectId/tasks/:taskId",
+    param("taskId")
+        .isMongoId()
+        .withMessage("Id Invalido"),
+    body("name")
+        .notEmpty()
+        .withMessage("El nombre de la task es obligatoria"),
+    body("description")
+        .notEmpty()
+        .withMessage("La Descripcion es obligatoria"),
+    handleErrors,
+    TaskController.updateTask
 )

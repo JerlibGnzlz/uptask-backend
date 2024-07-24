@@ -52,23 +52,23 @@ export class TaskController {
     static updateTask = async (req: Request, res: Response) => {
 
         // const { id } = req.params
+        const { taskId } = req.params
+        try {
+            const task = await Task.findByIdAndUpdate(
+                taskId,
+                req.body,
+                { new: true }
+            )
 
-        // try {
-        //     const proyecto = await Project.findByIdAndUpdate(
-        //         id,
-        //         req.body,
-        //         { new: true }
-        //     )
+            if (!task) {
+                const error = new Error("Tarea no actulizada")
+                return res.status(404).json({ error: error.message })
+            }
+            res.json({ "Tarea Actualizada": task })
+        } catch (error) {
+            console.log(error)
 
-        //     if (!proyecto) {
-        //         const error = new Error("Proyecto no actulizado")
-        //         return res.status(404).json({ error: error.message })
-        //     }
-        //     res.json({ "Proyecto Actualizado": proyecto })
-        // } catch (error) {
-        //     console.log(error)
-
-        // }
+        }
     }
 
     static deleteTask = async (req: Request, res: Response) => {
