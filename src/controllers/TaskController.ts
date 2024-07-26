@@ -79,6 +79,7 @@ export class TaskController {
 
     static deleteTask = async (req: Request, res: Response) => {
 
+        /* This code snippet is from the `deleteTask` method in the `TaskController` class. */
         const { taskId } = req.params
         try {
             const task = await Task.findById(taskId, req.body,)
@@ -95,6 +96,26 @@ export class TaskController {
         } catch (error) {
             console.log(error)
 
+        }
+    }
+
+    static updateStatus = async (req: Request, res: Response) => {
+        try {
+            const { taskId } = req.params
+
+            const task = await Task.findById(taskId)
+
+            if (!task) {
+                const error = new Error("Tarea no encontrado")
+                return res.status(404).json({ error: error.message })
+            }
+
+            const { status } = req.body
+            task.status = status
+            await task.save()
+            res.json(status)
+        } catch (error) {
+            console.log(error)
         }
     }
 }

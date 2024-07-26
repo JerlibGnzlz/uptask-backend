@@ -2,7 +2,7 @@ import { Router } from "express";
 import { ProjectController } from "../controllers/ProjectController";
 import { body, param } from "express-validator";
 import { handleErrors } from "../middleware/validation";
-import { TaskController } from "../controllers/TaskController";
+import { TaskController } from '../controllers/TaskController';
 import { validateProjectExists } from "../middleware/project";
 
 export const router = Router()
@@ -118,4 +118,15 @@ router.delete("/:projectId/tasks/:taskId",
         .withMessage("Id Invalido"),
     handleErrors,
     TaskController.deleteTask
+)
+
+router.post("/:projectId/tasks/:taskId/status",
+    param("taskId")
+        .isMongoId()
+        .withMessage("Id Invalido"),
+    body("status")
+        .notEmpty().withMessage("El estado es obligatorio"),
+    handleErrors,
+    TaskController.updateStatus
+
 )
