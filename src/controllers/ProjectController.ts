@@ -48,9 +48,8 @@ export class ProjectController {
         const { id } = req.params
 
         try {
-            const proyecto = await Project.findByIdAndUpdate(
+            const proyecto = await Project.findById(
                 id,
-                req.body,
                 { new: true }
             )
 
@@ -58,6 +57,13 @@ export class ProjectController {
                 const error = new Error("Proyecto no actulizado")
                 return res.status(404).json({ error: error.message })
             }
+
+            proyecto.clientName = req.body.clientName
+            proyecto.projectName = req.body.projectName
+            proyecto.description = req.body.description
+
+            await proyecto.save()
+
             res.json({ "Proyecto Actualizado": proyecto })
         } catch (error) {
             console.log(error)
