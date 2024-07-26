@@ -51,7 +51,6 @@ export class TaskController {
 
     static updateTask = async (req: Request, res: Response) => {
 
-        // const { id } = req.params
         const { taskId } = req.params
         try {
             const task = await Task.findByIdAndUpdate(
@@ -61,9 +60,16 @@ export class TaskController {
             )
 
             if (!task) {
-                const error = new Error("Tarea no actulizada")
+                const error = new Error("Tarea no encontrado")
                 return res.status(404).json({ error: error.message })
             }
+
+
+            if (task.project.toString() !== req.project.id) {
+                const error = new Error("Accion No Valida")
+                return res.status(400).json({ error: error.message })
+            }
+
             res.json({ "Tarea Actualizada": task })
         } catch (error) {
             console.log(error)
@@ -73,19 +79,22 @@ export class TaskController {
 
     static deleteTask = async (req: Request, res: Response) => {
 
-        // const { id } = req.params
+        const { taskId } = req.params
+        try {
+            const task = await Task.findById(taskId, req.body,)
 
-        // try {
-        //     const proyecto = await Project.findByIdAndDelete(id)
+            if (!task) {
+                const error = new Error("Tarea no encontrado")
+                return res.status(404).json({ error: error.message })
+            }
 
-        //     if (!proyecto) {
-        //         const error = new Error("Proyecto no Eliminado")
-        //         return res.status(404).json({ error: error.message })
-        //     }
-        //     res.json({ "Proyecto Eliminado": proyecto })
-        // } catch (error) {
-        //     console.log(error)
+            req.project.tasks = req.project.tasks.filter(task => task.toString() !== taskId)
 
-        // }
+            await Promise.allSettled([task.deleteOne(), req.project.save()])
+            res.json({ "Tarea Eliminada Correctamente": task })
+        } catch (error) {
+            console.log(error)
+
+        }
     }
 }

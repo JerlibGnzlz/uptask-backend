@@ -111,3 +111,11 @@ router.put("/:projectId/tasks/:taskId",
     handleErrors,
     TaskController.updateTask
 )
+
+router.delete("/:projectId/tasks/:taskId",
+    param("taskId")
+        .isMongoId()
+        .withMessage("Id Invalido"),
+    handleErrors,
+    TaskController.deleteTask
+)
