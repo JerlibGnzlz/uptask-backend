@@ -19,7 +19,7 @@ export class ProjectController {
 
         try {
             const proyecto = await Project.find({})
-            res.json({ "Proyectos": proyecto })
+            res.json(proyecto)
         } catch (error) {
             console.log(error)
 
