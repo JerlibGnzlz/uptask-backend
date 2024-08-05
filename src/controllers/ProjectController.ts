@@ -36,7 +36,8 @@ export class ProjectController {
                 const error = new Error("Proyecto no encontrado")
                 return res.status(404).json({ error: error.message })
             }
-            res.json({ "Proyecto By ID": proyecto })
+
+            res.json(proyecto)
         } catch (error) {
             console.log(error)
 
