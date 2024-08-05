@@ -83,7 +83,7 @@ export class ProjectController {
                 const error = new Error("Proyecto no Eliminado")
                 return res.status(404).json({ error: error.message })
             }
-            res.json({ "Proyecto Eliminado": proyecto })
+            res.json("Proyecto Eliminado")
         } catch (error) {
             console.log(error)
 
