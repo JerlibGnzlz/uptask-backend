@@ -65,7 +65,7 @@ export class ProjectController {
 
             await proyecto.save()
 
-            res.json({ "Proyecto Actualizado": proyecto })
+            res.json("Proyecto Actualizado")
         } catch (error) {
             console.log(error)
 
