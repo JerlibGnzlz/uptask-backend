@@ -21,7 +21,7 @@ export class TaskController {
         const { id } = req.params
         try {
             const tasks = await Task.find().where("project").equals(req.project.id).populate("project", "-tasks")
-            res.json({ "Tareas": tasks })
+            res.json("Tareas")
         } catch (error) {
             console.log(error)
         }
@@ -43,7 +43,7 @@ export class TaskController {
                 const error = new Error("Accion No Valida")
                 return res.status(400).json({ error: error.message })
             }
-            res.json({ "Tarea By ID": task })
+            res.json("Tarea By ID")
         } catch (error) {
             console.log(error)
         }
@@ -65,12 +65,14 @@ export class TaskController {
             }
 
 
+
             if (task.project.toString() !== req.project.id) {
                 const error = new Error("Accion No Valida")
                 return res.status(400).json({ error: error.message })
             }
 
-            res.json({ "Tarea Actualizada": task })
+
+            res.json("Tarea Actualizada")
         } catch (error) {
             console.log(error)
 
@@ -79,7 +81,6 @@ export class TaskController {
 
     static deleteTask = async (req: Request, res: Response) => {
 
-        /* This code snippet is from the `deleteTask` method in the `TaskController` class. */
         const { taskId } = req.params
         try {
             const task = await Task.findById(taskId, req.body,)
@@ -92,7 +93,7 @@ export class TaskController {
             req.project.tasks = req.project.tasks.filter(task => task.toString() !== taskId)
 
             await Promise.allSettled([task.deleteOne(), req.project.save()])
-            res.json({ "Tarea Eliminada Correctamente": task })
+            res.json("Tarea Eliminada Correctamente")
         } catch (error) {
             console.log(error)
 
