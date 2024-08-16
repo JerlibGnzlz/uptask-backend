@@ -11,7 +11,7 @@ export class ProjectController {
             await proyecto.save()
             res.json("Proyecto Creado Correctamente")
         } catch (error) {
-            console.log(error)
+            res.status(500).json({ error: "Hubo un error" })
         }
     }
 
@@ -21,8 +21,7 @@ export class ProjectController {
             const proyecto = await Project.find({})
             res.json(proyecto)
         } catch (error) {
-            console.log(error)
-
+            res.status(500).json({ error: "Hubo un error" })
         }
     }
 
@@ -39,8 +38,7 @@ export class ProjectController {
 
             res.json(proyecto)
         } catch (error) {
-            console.log(error)
-
+            res.status(500).json({ error: "Hubo un error" })
         }
     }
 
@@ -67,7 +65,7 @@ export class ProjectController {
 
             res.json("Proyecto Actualizado")
         } catch (error) {
-            console.log(error)
+            res.status(500).json({ error: "Hubo un error" })
 
         }
     }
@@ -85,7 +83,7 @@ export class ProjectController {
             }
             res.json("Proyecto Eliminado")
         } catch (error) {
-            console.log(error)
+            res.status(500).json({ error: "Hubo un error" })
 
         }
     }

@@ -13,7 +13,7 @@ export class TaskController {
             await Promise.allSettled([task.save(), req.project.save()])
             res.json("Task Creada Correctamente")
         } catch (error) {
-            console.log(error)
+            res.status(500).json({ error: "Hubo un error" })
         }
     }
 
@@ -23,14 +23,14 @@ export class TaskController {
             const tasks = await Task.find().where("project").equals(req.project.id).populate("project", "-tasks")
             res.json("Tareas")
         } catch (error) {
-            console.log(error)
+            res.status(500).json({ error: "Hubo un error" })
         }
     }
 
     static getTaskById = async (req: Request, res: Response) => {
 
-        const { taskId } = req.params
         try {
+            const { taskId } = req.params
             const task = await Task.findById(taskId)
 
             if (!task) {
@@ -43,9 +43,9 @@ export class TaskController {
                 const error = new Error("Accion No Valida")
                 return res.status(400).json({ error: error.message })
             }
-            res.json("Tarea By ID")
+            res.json(task)
         } catch (error) {
-            console.log(error)
+            res.status(500).json({ error: "Hubo un error" })
         }
     }
 
@@ -74,7 +74,7 @@ export class TaskController {
 
             res.json("Tarea Actualizada")
         } catch (error) {
-            console.log(error)
+            res.status(500).json({ error: "Hubo un error" })
 
         }
     }
@@ -95,7 +95,7 @@ export class TaskController {
             await Promise.allSettled([task.deleteOne(), req.project.save()])
             res.json("Tarea Eliminada Correctamente")
         } catch (error) {
-            console.log(error)
+            res.status(500).json({ error: "Hubo un error" })
 
         }
     }
@@ -116,7 +116,7 @@ export class TaskController {
             await task.save()
             res.json(status)
         } catch (error) {
-            console.log(error)
+            res.status(500).json({ error: "Hubo un error" })
         }
     }
 }
