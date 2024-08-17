@@ -43,7 +43,7 @@ const taskSchema: Schema = new Schema({
         default: taskStatus.PENDING
     }
 }, {
-    timestamps: false,
+    timestamps: true,
     versionKey: false
 })
 
