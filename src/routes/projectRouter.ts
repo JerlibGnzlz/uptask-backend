@@ -8,9 +8,7 @@ import { validateProjectExists } from "../middleware/project";
 export const router = Router()
 
 
-/* -------------------------------------------------------------------------- */
-// RUTAS DE PROJECTOS
-/* -------------------------------------------------------------------------- */
+/* ----------------------------- Rutas Projectos ---------------------------- */
 
 router.post("/create",
     body("projectName")
@@ -64,10 +62,7 @@ router.delete("/:id",
     ProjectController.deleteProject
 )
 
-/* -------------------------------------------------------------------------- */
-// RUTAS DE TASKS
-/* -------------------------------------------------------------------------- */
-
+/* ------------------------------- Rutas Task ------------------------------- */
 
 router.param("projectId", validateProjectExists)
 
