@@ -114,7 +114,7 @@ export class TaskController {
             const { status } = req.body
             task.status = status
             await task.save()
-            res.json(status)
+            res.json("Tarea Actualizada")
         } catch (error) {
             res.status(500).json({ error: "Hubo un error" })
         }
