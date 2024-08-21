@@ -4,5 +4,5 @@ export const router = Router()
 
 
 router.get("/", (req, res) => {
-    res.send("aaaa")
+    res.send("desde user")
 })
