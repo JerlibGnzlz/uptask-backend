@@ -8,7 +8,7 @@ export class UserController {
         const user = new User(req.body)
         try {
             await user.save()
-            res.json("Usuario Creado Correctamente")
+            res.json("Cuenta creada, revisa tu email para confirmarla")
         } catch (error) {
             res.status(500).json({ error: "Hubo un error" })
         }
