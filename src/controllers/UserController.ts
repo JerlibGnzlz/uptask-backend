@@ -3,6 +3,7 @@ import { User } from '../models/User';
 import { hashPassword } from "../utils/auth";
 import { Token } from "../models/Token";
 import { generateToken } from "../utils/token";
+import { transport } from "../config/nodemailer";
 
 
 export class UserController {
@@ -29,6 +30,17 @@ export class UserController {
             token.token = generateToken()
             token.user = user.id
 
+
+            /* ----------------------------- Enviar el Email ---------------------------- */
+
+            transport.sendMail({
+                from: "Uptask<admin@uptask.com>",
+                to: user.email,
+                subject: "Uptask Conforma tu cuenta",
+                text: "Uptask Conforma tu cuenta",
+                html: `<p>Proband Correo</ p >`
+
+            })
             await Promise.allSettled([user.save(), token.save()])
 
             res.json("Cuenta creada, revisa tu email para confirmarla")
@@ -37,3 +49,5 @@ export class UserController {
         }
     }
 }
+
+/* ----------------------------------Objetos----------------------------------- */
