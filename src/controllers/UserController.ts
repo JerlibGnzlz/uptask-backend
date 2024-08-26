@@ -3,7 +3,7 @@ import { User } from '../models/User';
 import { hashPassword } from "../utils/auth";
 import { Token } from "../models/Token";
 import { generateToken } from "../utils/token";
-import { transport } from "../config/nodemailer";
+import { AuthEmail } from "../emails/AuthEmail";
 
 
 export class UserController {
@@ -11,6 +11,7 @@ export class UserController {
 
         try {
             const { password, email } = req.body
+
             /* --------------------------- Prevenir duplicados -------------------------- */
             const userExist = await User.findOne({ email })
             if (userExist) {
@@ -22,7 +23,6 @@ export class UserController {
             const user = new User(req.body)
 
             /* ------------------------------ Hash password ----------------------------- */
-
             user.password = await hashPassword(password)
 
             /* ------------------------------ Generar Token ----------------------------- */
@@ -32,15 +32,12 @@ export class UserController {
 
 
             /* ----------------------------- Enviar el Email ---------------------------- */
-
-            transport.sendMail({
-                from: "Uptask<admin@uptask.com>",
-                to: user.email,
-                subject: "Uptask Conforma tu cuenta",
-                text: "Uptask Conforma tu cuenta",
-                html: `<p>Proband Correo</ p >`
-
+            AuthEmail.sendEmail({
+                email: user.email,
+                name: user.email,
+                token: token.token
             })
+
             await Promise.allSettled([user.save(), token.save()])
 
             res.json("Cuenta creada, revisa tu email para confirmarla")
