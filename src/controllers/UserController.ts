@@ -61,7 +61,7 @@ export class UserController {
             user.confirmed = true
 
             await Promise.allSettled([user.save(), tokenExist.deleteOne()])
-            res.json({ "confirmado": user })
+            res.json("Cuenta Confirmada correctamente")
         } catch (error) {
             res.status(500).json({ error: "Hubo un error" })
         }
