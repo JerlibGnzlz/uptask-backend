@@ -32,5 +32,6 @@ router.post("/confirmarCuenta",
     body("token")
         .notEmpty()
         .withMessage("El token no puede ir vacio"),
+    handleErrors,
     UserController.confirmatedAccount
 )

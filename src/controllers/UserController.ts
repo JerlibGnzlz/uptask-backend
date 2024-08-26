@@ -50,7 +50,18 @@ export class UserController {
     static confirmatedAccount = async (req: Request, res: Response) => {
         try {
             const { token } = req.body
-            console.log(token)
+
+            const tokenExist = await Token.findOne({ token })
+            if (!tokenExist) {
+                const error = new Error("El Token no valido")
+                return res.status(401).json({ error: error.message })
+            }
+
+            const user = await User.findById(tokenExist.user)
+            user.confirmed = true
+
+            await Promise.allSettled([user.save(), tokenExist.deleteOne()])
+            res.json({ "confirmado": user })
         } catch (error) {
             res.status(500).json({ error: "Hubo un error" })
         }
