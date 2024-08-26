@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { body } from 'express-validator'
-import { UserController } from "../controllers/UserController";
+import { UserController } from '../controllers/UserController';
 import { handleErrors } from "../middleware/validation";
 
 
@@ -25,4 +25,12 @@ router.post("/create",
         .withMessage("Email no valido"),
     handleErrors,
     UserController.createUser
+)
+
+
+router.post("/confirmarCuenta",
+    body("token")
+        .notEmpty()
+        .withMessage("El token no puede ir vacio"),
+    UserController.confirmatedAccount
 )

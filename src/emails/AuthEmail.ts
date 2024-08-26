@@ -21,10 +21,9 @@ export class AuthEmail {
             Visita el siguiente enlace:
             </p>
             <a href="">Confirmar Cuenta</a>
-            <p>Ingresa el codigo:<b>${usuario.token}</b></p>
+            <p>Ingresa el codigo:<b> ${usuario.token}</b></p>
             <p>Este token expira en 10 minutos</p>
             `
         })
-        console.log(info)
     }
 }
