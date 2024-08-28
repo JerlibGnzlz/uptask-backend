@@ -34,7 +34,7 @@ export class UserController {
             /* ----------------------------- Enviar el Email ---------------------------- */
             AuthEmail.sendEmail({
                 email: user.email,
-                name: user.email,
+                name: user.name,
                 token: token.token
             })
 
@@ -54,7 +54,7 @@ export class UserController {
             const tokenExist = await Token.findOne({ token })
             if (!tokenExist) {
                 const error = new Error("El Token no valido")
-                return res.status(401).json({ error: error.message })
+                return res.status(404).json({ error: error.message })
             }
 
             const user = await User.findById(tokenExist.user)
@@ -76,9 +76,31 @@ export class UserController {
 
             if (!user) {
                 const error = new Error("No existe el Usuario")
+                return res.status(404).json({ error: error.message })
+            }
+
+            if (!user.confirmed) {
+                const token = new Token
+                token.token = generateToken()
+                token.user = user.id
+                await token.save()
+
+                /* ----------------------------- Enviar el Email ---------------------------- */
+                AuthEmail.sendEmail({
+                    email: user.email,
+                    name: user.name,
+                    token: token.token
+                })
+
+                await Promise.allSettled([user.save(), token.save()])
+
+                const error = new Error("La cuenta no ha sido confirmada, hemos enviado un email de condfirmacion")
                 return res.status(401).json({ error: error.message })
             }
-            res.send(user)
+
+
+
+
         } catch (error) {
             res.status(500).json({ error: "Hubo un error" })
         }
