@@ -35,3 +35,14 @@ router.post("/confirmarCuenta",
     handleErrors,
     UserController.confirmatedAccount
 )
+
+router.post("/login",
+    body("email")
+        .notEmpty()
+        .isEmail()
+        .withMessage("Email no valido"),
+    body("password")
+        .notEmpty().withMessage("El Password no puede ir vacio"),
+    handleErrors,
+    UserController.login
+)

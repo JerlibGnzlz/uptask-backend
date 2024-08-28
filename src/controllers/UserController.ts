@@ -66,5 +66,22 @@ export class UserController {
             res.status(500).json({ error: "Hubo un error" })
         }
     }
+
+    static login = async (req: Request, res: Response) => {
+        try {
+            const { password, email } = req.body
+
+            /* --------------------------- Prevenir duplicados -------------------------- */
+            const user = await User.findOne({ email })
+
+            if (!user) {
+                const error = new Error("No existe el Usuario")
+                return res.status(401).json({ error: error.message })
+            }
+            res.send(user)
+        } catch (error) {
+            res.status(500).json({ error: "Hubo un error" })
+        }
+    }
 }
 
