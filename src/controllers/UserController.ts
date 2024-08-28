@@ -1,6 +1,6 @@
 import type { Request, Response } from "express"
 import { User } from '../models/User';
-import { hashPassword } from "../utils/auth";
+import { checkPassword, hashPassword } from "../utils/auth";
 import { Token } from "../models/Token";
 import { generateToken } from "../utils/token";
 import { AuthEmail } from "../emails/AuthEmail";
@@ -92,15 +92,20 @@ export class UserController {
                     token: token.token
                 })
 
-                await Promise.allSettled([user.save(), token.save()])
-
                 const error = new Error("La cuenta no ha sido confirmada, hemos enviado un email de condfirmacion")
                 return res.status(401).json({ error: error.message })
             }
 
 
+            /* ---------------------------- Revisar Password ---------------------------- */
 
+            const isPasswordCorrect = await checkPassword(password, user.password)
+            if (!isPasswordCorrect) {
+                const error = new Error("El Password no es correcto")
+                return res.status(401).json({ error: error.message })
+            }
 
+            res.json("Autenticado...")
         } catch (error) {
             res.status(500).json({ error: "Hubo un error" })
         }
