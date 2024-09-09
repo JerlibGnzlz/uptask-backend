@@ -13,7 +13,7 @@ router.post("/create",
         .withMessage("El nombre del usuario es obligatorio"),
     body("password")
         .isLength({ min: 8 }).withMessage("El Password es muy corto minimo 8 Caracteres"),
-    body("password-confirmation").custom((value, { req }) => {
+    body("password_confirmation").custom((value, { req }) => {
         if (value !== req.body.password) {
             throw new Error("Los password no son iguales")
         }
