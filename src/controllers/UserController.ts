@@ -110,5 +110,48 @@ export class UserController {
             res.status(500).json({ error: "Hubo un error" })
         }
     }
+
+
+    static requestConfirmationCode = async (req: Request, res: Response) => {
+
+        try {
+            const { email } = req.body
+
+            /* --------------------------- Usuario Existe -------------------------- */
+            const user = await User.findOne({ email })
+            if (!user) {
+                const error = new Error("El Usuario no esta registrado")
+                return res.status(404).json({ error: error.message })
+            }
+
+
+            if (user.confirmed) {
+                const error = new Error("El Usuario ya esta confirmado")
+                return res.status(403).json({ error: error.message })
+            }
+
+
+            /* ------------------------------ Generar Token ----------------------------- */
+            const token = new Token
+            token.token = generateToken()
+            token.user = user.id
+
+
+            /* ----------------------------- Enviar el Email ---------------------------- */
+            AuthEmail.sendEmail({
+                email: user.email,
+                name: user.name,
+                token: token.token
+            })
+
+            await Promise.allSettled([user.save(), token.save()])
+
+            res.json("Se Envio un nuevo Token a tu E-mail")
+        } catch (error) {
+            res.status(500).json({ error: "Hubo un error" })
+        }
+    }
+
+
 }
 

@@ -46,3 +46,13 @@ router.post("/login",
     handleErrors,
     UserController.login
 )
+
+router.post("/request-code",
+    body("email")
+        .notEmpty()
+        .isEmail()
+        .withMessage("Email no valido"),
+    handleErrors,
+    UserController.requestConfirmationCode
+)
+
