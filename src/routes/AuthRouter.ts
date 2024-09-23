@@ -56,3 +56,11 @@ router.post("/request-code",
     UserController.requestConfirmationCode
 )
 
+router.post("/forgotPassword",
+    body("email")
+        .notEmpty()
+        .isEmail()
+        .withMessage("Email no valido"),
+    handleErrors,
+    UserController.forgotPassword
+)
