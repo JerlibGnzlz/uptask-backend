@@ -64,3 +64,12 @@ router.post("/forgotPassword",
     handleErrors,
     UserController.forgotPassword
 )
+
+router.post('/validateToken',
+    body("token")
+        .notEmpty()
+        .withMessage("El token no puede ir vacio"),
+    handleErrors,
+    UserController.validatedToken
+
+)
