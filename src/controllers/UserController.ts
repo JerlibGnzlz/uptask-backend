@@ -198,7 +198,7 @@ export class UserController {
             }
 
 
-            res.json("Token valido defino tu nuevo password")
+            res.json("Token valido define tu nuevo password")
         } catch (error) {
             res.status(500).json({ error: "Hubo un error" })
         }
