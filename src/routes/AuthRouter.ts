@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { body } from 'express-validator'
+import { body, param } from 'express-validator'
 import { UserController } from '../controllers/UserController';
 import { handleErrors } from "../middleware/validation";
 
@@ -71,5 +71,20 @@ router.post('/validateToken',
         .withMessage("El token no puede ir vacio"),
     handleErrors,
     UserController.validatedToken
+)
 
+router.post('/updatePassword/:token',
+    param('token')
+        .isNumeric()
+        .withMessage("Token no valido"),
+    body("password")
+        .isLength({ min: 8 }).withMessage("El Password es muy corto minimo 8 Caracteres"),
+    body("password_confirmation").custom((value, { req }) => {
+        if (value !== req.body.password) {
+            throw new Error("Los password no son iguales")
+        }
+        return true
+    }),
+    handleErrors,
+    UserController.updatePasswordWithToken
 )
